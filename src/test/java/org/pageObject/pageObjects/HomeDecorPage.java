@@ -16,7 +16,7 @@ public class HomeDecorPage extends AbstractPage {
 
     public ElectronicsPage selectElectronicsCategory() {
         //js.executeScript("arguments[0].scrollIntoView();", ELECTRONICS_CATEGORY);
-        //js.executeScript("window.scrollBy(0,1000)");
+        js.executeScript("window.scrollBy(0,1000)");
         getDriver().findElement(ELECTRONICS_CATEGORY).click();
         return new ElectronicsPage();
     }
