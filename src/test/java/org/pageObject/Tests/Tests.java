@@ -16,10 +16,24 @@ public class Tests extends BaseTest {
     }
 
     @Test
-    public void checkItemsCounter(){
+    public void checkItemsCounter() {
         mainPage.setLanguage("Automation")
-        .openHomeDecorMenu()
-        .selectElectronicsCategory();
-        }
+                .openHomeDecorMenu()
+                .openElectronicsCategory()
+                .selectShowAsList()
+                .setResultsToShowOnPage(25)
+                .checkItemsCountOnPage();
     }
+
+    @Test
+    public void checkShowSelect() {
+        mainPage.setLanguage("Automation")
+                .openHomeDecorMenu()
+                .openElectronicsCategory()
+                .selectShowAsList()
+                .setResultsToShowOnPage(5)
+                .checkItemsCountOnEachPage(5);
+    }
+
+}
 

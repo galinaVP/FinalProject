@@ -30,5 +30,4 @@ public class AbstractPage {
         language.selectByVisibleText(lang);
         return this;
     }
-
 }

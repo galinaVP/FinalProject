@@ -14,9 +14,9 @@ public class HomeDecorPage extends AbstractPage {
         Assert.assertEquals(getDriver().findElement(HOME_AND_DECOR_TITLE).getText(), "HOME & DECOR");
     }
 
-    public ElectronicsPage selectElectronicsCategory() {
-        //js.executeScript("arguments[0].scrollIntoView();", ELECTRONICS_CATEGORY);
-        js.executeScript("window.scrollBy(0,1000)");
+    public ElectronicsPage openElectronicsCategory()  {
+        // js.executeScript("arguments[0].scrollIntoView();", ELECTRONICS_CATEGORY);
+        // js.executeScript("window.scrollBy(0,10000)");
         getDriver().findElement(ELECTRONICS_CATEGORY).click();
         return new ElectronicsPage();
     }
