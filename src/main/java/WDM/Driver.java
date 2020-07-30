@@ -27,38 +27,36 @@ public class Driver{
     }
 
     private static void initDriver() {
- //       String browser = System.getProperty("browser", "chrome");
-//        switch (browser) {
-//            case "chrome":
-//                chromedriver().setup();
-//                driver = new ChromeDriver();
+        String browser = System.getProperty("browser", "chrome");
+        switch (browser) {
+            case "chrome":
+                chromedriver().setup();
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
+            case "edge":
+                edgedriver().setup();
+                driver = new EdgeDriver();
+                break;
+            case "IE":
+                iedriver().setup();
+                driver = new InternetExplorerDriver();
+                break;
+            case "opera":
+                operadriver().setup();
+                driver = new OperaDriver();
+                break;
+//            case "safari":
+//                safaridriver().setup();
+//                driver = new SafariDriver();
 //                break;
-//            case "firefox":
-//                firefoxdriver().setup();
-//                driver = new FirefoxDriver();
-//                break;
-//            case "edge":
-//                edgedriver().setup();
-//                driver = new EdgeDriver();
-//                break;
-//            case "IE":
-//                iedriver().setup();
-//                driver = new InternetExplorerDriver();
-//                break;
-//            case "opera":
-//                operadriver().setup();
-//                driver = new OperaDriver();
-//                break;
-////            case "safari":
-////                safaridriver().setup();
-////                driver = new SafariDriver();
-////                break;
-////            default:
-////                System.out.println("You've enter unknown browser, the Chrome is going to be used as default");
-////                chromedriver().setup();
-////                driver = new ChromeDriver();
-////                break;
-//        }
+            default:
+                throw new IllegalArgumentException("Entered browser value is not recognized");
+        }
+
         chromedriver().setup();
         threadDriver.set(new ChromeDriver());
 

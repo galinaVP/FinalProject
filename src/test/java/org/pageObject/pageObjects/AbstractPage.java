@@ -1,10 +1,9 @@
 package org.pageObject.pageObjects;
 
-import WDM.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.pageObject.pageObjects.HomeDecor.HomeDecorPage;
 
 import static WDM.Driver.*;
 
@@ -20,14 +19,26 @@ public class AbstractPage {
         return new HomeDecorPage();
     }
 
+    //@AllArgsConstructor
     enum Language {
-        AUTO,
-        ENG
+        AUTO("Automation"),
+        ENG("English");
+
+        private String name;
+
+        Language(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
     public AbstractPage setLanguage(String lang) {
         Select language = new Select((getDriver().findElement(LANGUAGE)));
-        language.selectByVisibleText(lang);
+        language.selectByVisibleText(lang.toString());
         return this;
     }
 }

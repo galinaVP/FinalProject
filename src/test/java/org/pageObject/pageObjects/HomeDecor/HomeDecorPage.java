@@ -1,6 +1,9 @@
-package org.pageObject.pageObjects;
+package org.pageObject.pageObjects.HomeDecor;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.pageObject.pageObjects.AbstractPage;
+import org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage;
 import org.testng.Assert;
 
 import static WDM.Driver.getDriver;
@@ -15,9 +18,9 @@ public class HomeDecorPage extends AbstractPage {
     }
 
     public ElectronicsPage openElectronicsCategory()  {
-        // js.executeScript("arguments[0].scrollIntoView();", ELECTRONICS_CATEGORY);
-        // js.executeScript("window.scrollBy(0,10000)");
-        getDriver().findElement(ELECTRONICS_CATEGORY).click();
+        WebElement electronics = getDriver().findElement(ELECTRONICS_CATEGORY);
+        electronics.isDisplayed();
+        electronics.click();
         return new ElectronicsPage();
     }
 
