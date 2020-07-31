@@ -8,13 +8,13 @@ public class Tests extends BaseTest {
 
     MainPage mainPage;
 
-    @BeforeMethod
+    @BeforeMethod (alwaysRun = true)
     public void mainPage() {
         mainPage = new MainPage();
     }
 
     @Test
-    public void checkItemsCounter() {
+    public void checkItemsCounter() throws InterruptedException {
         mainPage.setLanguage("Automation")
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
@@ -42,6 +42,17 @@ public class Tests extends BaseTest {
                 .setResultsToShowOnPage(25)
                 .setSortBy("Price")
                 .checkSortedByPrice();
+    }
+
+    @Test
+    public void checkPriceFilter() {
+        mainPage.setLanguage("Automation")
+                .openHomeDecorMenu()
+                .openElectronicsCategory()
+                .selectShowAsList()
+                .setResultsToShowOnPage(25)
+                .setFilterByPriceRangeFrom(0.00, 999.99)
+                .checkPriceAccordingToFilter(0.00, 999.99);
     }
 
 }

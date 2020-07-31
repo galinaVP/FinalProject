@@ -1,5 +1,7 @@
 package org.pageObject.Utils;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +14,20 @@ public class StringUtils {
             extractedInt = Integer.parseInt(matcher.group());
         }
         return extractedInt;
+    }
+    public static Double extractDoubleFromString(String price) {
+        Pattern pattern = Pattern.compile("\\d+.\\d+");
+        Matcher matcher = pattern.matcher(price);
+        Double extractedDouble = null;
+        while (matcher.find()) {
+            extractedDouble = Double.parseDouble(matcher.group());
+        }
+        return extractedDouble;
+    }
+
+    public static String convertIntToString(int integerValue){
+        String stringValue = String.valueOf(integerValue);
+        return stringValue;
     }
 }
 
