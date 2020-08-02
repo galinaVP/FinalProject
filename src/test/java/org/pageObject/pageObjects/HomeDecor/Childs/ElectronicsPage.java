@@ -1,20 +1,21 @@
 package org.pageObject.pageObjects.HomeDecor.Childs;
 
-import com.google.inject.OutOfScopeException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pageObject.pageObjects.AbstractPage;
+import org.pageObject.pageObjects.ProductPage;
 import org.testng.Assert;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.List;
 
 import static WDM.Driver.getDriver;
+import static org.pageObject.StepsDefinition.Context.getContext;
 import static org.pageObject.Utils.StringUtils.*;
+import static org.pageObject.Utils.ListUtils.*;
 
 public class ElectronicsPage extends AbstractPage {
 
@@ -30,6 +31,7 @@ public class ElectronicsPage extends AbstractPage {
     //Check if filter was applied - need to check with contains or extract into list of doubles
     // private static final By PRICE_FILTER_SELECTED = By.cssSelector(".sidebar .currently ol li .value");
     private static final By PRICE_OF_ELEMENTS = By.cssSelector(".col-main ol li .regular-price, ol li .price-to");
+    private static final By PRODUCT_TITLE_IN_LIST = By.cssSelector("ol#products-list > li .product-name");
 
     public ElectronicsPage() {
         Assert.assertEquals(getDriver().findElement(ELECTRONICS_TITLE).getText(), "ELECTRONICS");
@@ -48,7 +50,8 @@ public class ElectronicsPage extends AbstractPage {
     }
 
     public ElectronicsPage checkItemsCountOnPage() {
-       List<WebElement> listOfElements = new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfAllElementsLocatedBy(ON_PAGE_AMOUNT));
+        List<WebElement> listOfElements = new WebDriverWait(getDriver(), 10)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(ON_PAGE_AMOUNT));
         int amountOnPage = listOfElements.size();
         String items = getDriver().findElement(COUNTER_AMOUNT).getText();
         int counterAmount = extractIntFromString(items);
@@ -84,8 +87,14 @@ public class ElectronicsPage extends AbstractPage {
     }
 
     public ElectronicsPage checkSortedByPrice() {
-        // By.cssSelector("li:nth-of-type(1) .regular-price > .price")
-        //  li:nth-of-type(9) > .product-shop .price-from > .price
+        List<WebElement> priceOfElements = getDriver().findElements(PRICE_OF_ELEMENTS);
+        int amountOfPrice = priceOfElements.size();
+
+        for (int i = 0; i < amountOfPrice - 1; i++) {
+            double init = extractDoubleFromString(priceOfElements.get(i).getText());
+            double next = extractDoubleFromString(priceOfElements.get(i + 1).getText());
+            Assert.assertTrue(init <= next, "Previous element is bigger then next one:" + next);
+        }
         return this;
     }
 
@@ -110,6 +119,28 @@ public class ElectronicsPage extends AbstractPage {
             Assert.assertTrue(price >= fromPrice && price <= toPrice, "Price of the product is not in the selected filter range");
         }
         return this;
+    }
+
+//    public ElectronicsPage chooseRandomItemInList() {
+//        List<WebElement> listOfElements = new WebDriverWait(getDriver(), 10)
+//                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(PRODUCT_TITLE_IN_LIST));
+//        WebElement randomItem = getRandomElement(listOfElements);
+//        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", randomItem);
+//        randomItem.click();
+//      return this;
+//    }
+        public ElectronicsPage chooseRandomItemInList() {
+        List<WebElement> listOfElements = new WebDriverWait(getDriver(), 10)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(PRODUCT_TITLE_IN_LIST));
+        getContext().setRandomItem(getRandomElement(listOfElements));
+        return this;
+    }
+
+    public ProductPage openRandomItem(){
+        WebElement randomItem = getContext().getRandomItem();
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", randomItem);
+        randomItem.click();
+        return new ProductPage();
     }
 }
 

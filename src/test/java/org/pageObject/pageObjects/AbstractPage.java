@@ -1,6 +1,5 @@
 package org.pageObject.pageObjects;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -9,20 +8,25 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pageObject.pageObjects.HomeDecor.HomeDecorPage;
 
-import static WDM.Driver.*;
+import java.util.List;
+
+import static WDM.Driver.getDriver;
 
 public class AbstractPage {
 
     public AbstractPage() {
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), 5);
-            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("document.getElementById('close-fixedban').click()")));
+            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("close-fixedban")));
             ((JavascriptExecutor) getDriver()).executeScript("document.getElementById('close-fixedban').click()");
         } catch (Exception e){}
     }
 
-    private By LANGUAGE = By.id("select-language");
-    public By HOME_AND_DECOR = By.linkText("HOME & DECOR");
+    private static final By LANGUAGE = By.id("select-language");
+    private static final By HOME_AND_DECOR = By.linkText("HOME & DECOR");
+    private static final By ACCOUNT_MENU = By.cssSelector(".skip-account .label");
+    private static final By ACCOUNT_MENU_ITEM_REGISTER = By.cssSelector("#header-account  ul > li select[title='Register']");
+    private static final By ACCOUNT_MENU_ITEMS = By.cssSelector("#header-account  ul > li");
 
     public HomeDecorPage openHomeDecorMenu() {
         getDriver().findElement(HOME_AND_DECOR).click();
@@ -47,8 +51,50 @@ public class AbstractPage {
     }
 
     public AbstractPage setLanguage(String lang) {
-        Select language = new Select((getDriver().findElement(LANGUAGE)));
+        Select language = new Select(getDriver().findElement(LANGUAGE));
         language.selectByVisibleText(lang.toString());
         return this;
     }
+
+    public RegistrationPage openRegistrationForm(){
+        getDriver().findElement(ACCOUNT_MENU).click();
+        List <WebElement> accountMenuItems = getDriver().findElements(ACCOUNT_MENU_ITEMS);
+        int menuItemsCount = accountMenuItems.size();
+        for (int i = 0; i < menuItemsCount; i++){
+            String register = accountMenuItems.get(i).getText();
+            if (register.contains("Register")){
+                accountMenuItems.get(i).click();
+                break;
+            }
+        }
+        return new RegistrationPage();
+    }
+
+    public AbstractPage logOut() {
+        getDriver().findElement(ACCOUNT_MENU).click();
+        List <WebElement> accountMenuItems = getDriver().findElements(ACCOUNT_MENU_ITEMS);
+        int menuItemsCount = accountMenuItems.size();
+        for (int i = 0; i < menuItemsCount; i++){
+            String register = accountMenuItems.get(i).getText();
+            if (register.contains("Log Out")){
+                accountMenuItems.get(i).click();
+                break;
+            }
+        }
+        return this;
+    }
+    public LoginPage openLoginForm() {
+        getDriver().findElement(ACCOUNT_MENU).click();
+        List <WebElement> accountMenuItems = getDriver().findElements(ACCOUNT_MENU_ITEMS);
+        int menuItemsCount = accountMenuItems.size();
+        for (int i = 0; i < menuItemsCount; i++){
+            String register = accountMenuItems.get(i).getText();
+            if (register.contains("Log In")){
+                accountMenuItems.get(i).click();
+                break;
+            }
+        }
+        return new LoginPage();
+    }
+
 }
