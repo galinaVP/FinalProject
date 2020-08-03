@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ser.std.NullSerializer;
 import org.openqa.selenium.By;
 import org.pageObject.StepsDefinition.User;
 import org.testng.Assert;
+import primitives.Button;
+import primitives.InputField;
 
 import static WDM.Driver.getDriver;
 import static org.pageObject.Utils.StringUtils.generateRandomString;
@@ -17,17 +19,24 @@ public class RegistrationPage extends AbstractPage {
     private static final By PASSWORD_CONFIRM_FIELD = By.cssSelector("input#confirmation");
     private static final By REGISTER_BUTTON = By.cssSelector("button[title='Register']");
 
+    private static final InputField FIRST_NAME = new InputField(By.cssSelector("input#firstname"), "Register page -> First name input field");
+    private static final InputField LAST_NAME = new InputField(By.cssSelector("input#lastname"), "Register page -> Last name input field");
+    private static final InputField EMAIL = new InputField(By.cssSelector("#email_address"), "Register page -> Email input field");
+    private static final InputField PASSWORD = new InputField(By.cssSelector("#password"), "Register page -> Password input field");
+    private static final InputField PASSWORD_CONFIRM = new InputField(By.cssSelector("input#confirmation"), "Register page -> Confirm input field");
+    private static final Button REGISTER  = new Button(By.cssSelector("button[title='Register_____']"), "Register page -> Register button");
+
     public RegistrationPage() {
         Assert.assertEquals(getDriver().findElement(REGISTRATION_PAGE_TITLE).getText(), "CREATE AN ACCOUNT");
     }
 
     public MyDashboardPage registerUser(User user) {
-        getDriver().findElement(FIRST_NAME_FIELD).sendKeys(user.getFirstName());
-        getDriver().findElement(LAST_NAME_FIELD).sendKeys(user.getLastName());
-        getDriver().findElement(EMAIL_FIELD).sendKeys(user.getEmail());
-        getDriver().findElement(PASSWORD_FIELD).sendKeys(user.getPassword());
-        getDriver().findElement(PASSWORD_CONFIRM_FIELD).sendKeys(user.getConfirmPassword());
-        getDriver().findElement(REGISTER_BUTTON).click();
+        FIRST_NAME.setText(user.getFirstName());
+        LAST_NAME.setText(user.getLastName());
+        EMAIL.setText(user.getEmail());
+        PASSWORD.setText(user.getPassword());
+        PASSWORD_CONFIRM.setText(user.getConfirmPassword());
+        REGISTER.click();
         return new MyDashboardPage();
     }
 }

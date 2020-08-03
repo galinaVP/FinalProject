@@ -17,7 +17,7 @@ public class Driver {
 
     private static ThreadLocal<WebDriver> threadDriver = new ThreadLocal();
 
-    public Driver() {
+    private Driver() {
     }
 
     public static WebDriver getDriver() {

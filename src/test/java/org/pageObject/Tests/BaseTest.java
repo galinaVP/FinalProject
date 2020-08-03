@@ -1,6 +1,10 @@
 package org.pageObject.Tests;
 
 import WDM.Driver;
+import io.qameta.allure.Attachment;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -17,7 +21,16 @@ public class BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public static void closeDriver() {
+    public void closeDriver(ITestResult result) {
+        if (!result.isSuccess()) {
+            screenCapture();
+        }
         Driver.killDriver();
     }
+
+    @Attachment(type = "image/png")
+    private byte[] screenCapture() {
+        return ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
+    }
 }
+

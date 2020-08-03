@@ -1,6 +1,7 @@
 package org.pageObject.Tests;
 
 import org.pageObject.StepsDefinition.User;
+import org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage;
 import org.pageObject.pageObjects.MainPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -13,12 +14,21 @@ import static org.pageObject.Utils.StringUtils.generateRandomString;
 public class Tests extends BaseTest {
 
     MainPage mainPage;
+    ThreadLocal<User> tlUser = new ThreadLocal<>();
 
     @BeforeMethod (alwaysRun = true)
     public void mainPage() {
         mainPage = new MainPage();
+        String random = generateRandomString(2);
+        tlUser.set(User.builder()
+                .firstName("TestFirst".concat(random))
+                .lastName("TestLast1".concat(random))
+                .email(random.concat("Email@test.com"))
+                .password("password1!".concat(random))
+                .confirmPassword("password1!".concat(random))
+                .build());
     }
-
+/*
     @Test
     public void checkItemsCounter() {
         mainPage.setLanguage("Automation")
@@ -60,29 +70,24 @@ public class Tests extends BaseTest {
                 .setFilterByPriceRangeFrom(0.00, 999.99)
                 .checkPriceAccordingToFilter(0.00, 999.99);
     }
-
+*/
     @Test
     public void checkAddToWishList() {
-        String random = generateRandomString(2);
-        User user = User.builder()
-                .firstName("TestFirst".concat(random))
-                .lastName("TestLast1".concat(random))
-                .email(random.concat("Email@test.com"))
-                .password("password1!".concat(random))
-                .confirmPassword("password1!".concat(random))
-                .build();
 
+
+        String name=
        mainPage.setLanguage("Automation")
                 .openRegistrationForm()
-                .registerUser(user)
+                .registerUser(tlUser.get())
                 .logOut()
                 .openLoginForm()
-                .loginUser(user)
+                .loginUser(tlUser.get())
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
                 .setResultsToShowOnPage(25)
-                .chooseRandomItemInList()
+                .chooseRandomItemInList();
+                new ElectronicsPage()
                 .openRandomItem()
                 .addItemToWishList()
                 .verifyCorrectItemInWishList();

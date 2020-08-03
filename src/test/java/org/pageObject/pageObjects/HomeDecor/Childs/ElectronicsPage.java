@@ -129,11 +129,11 @@ public class ElectronicsPage extends AbstractPage {
 //        randomItem.click();
 //      return this;
 //    }
-        public ElectronicsPage chooseRandomItemInList() {
+        public String chooseRandomItemInList() {
         List<WebElement> listOfElements = new WebDriverWait(getDriver(), 10)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(PRODUCT_TITLE_IN_LIST));
         getContext().setRandomItem(getRandomElement(listOfElements));
-        return this;
+        return getRandomElement(listOfElements).getText();
     }
 
     public ProductPage openRandomItem(){
