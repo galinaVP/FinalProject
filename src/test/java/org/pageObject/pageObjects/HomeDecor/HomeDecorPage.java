@@ -17,7 +17,7 @@ public class HomeDecorPage extends AbstractPage {
     private static final By ELECTRONICS_CATEGORY = By.cssSelector("img[alt='Electronics']");
 
     public HomeDecorPage() {
-        Assert.assertEquals(getDriver().findElement(HOME_AND_DECOR_TITLE).getText(), "HOME & DECOR");
+        Assert.assertEquals(getDriver().getTitle(), "Home & Decor");
     }
 
     public ElectronicsPage openElectronicsCategory()  {

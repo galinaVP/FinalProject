@@ -7,20 +7,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pageObject.pageObjects.AbstractPage;
-import org.pageObject.pageObjects.ProductPage;
+import org.pageObject.pageObjects.SalePage;
 import org.testng.Assert;
+import primitives.Button;
 
 import java.util.List;
 
 import static WDM.Driver.getDriver;
-import static org.pageObject.StepsDefinition.Context.getContext;
 import static org.pageObject.Utils.StringUtils.*;
 import static org.pageObject.Utils.ListUtils.*;
 
 public class ElectronicsPage extends AbstractPage {
 
     private static final By SHOW_AMOUNT = By.cssSelector(".category-products > .toolbar > .pager > .count-container > .limiter > select[title='Results per page']");
-    private static final By ELECTRONICS_TITLE = By.xpath("//html[@id='top']/body/div[@class='wrapper']/div[@class='page']//h1[.='Electronics']");
     private static final By LIST = By.linkText("List");
     private static final By COUNTER_AMOUNT = By.cssSelector(".category-products > .toolbar > .pager > .count-container > .amount.amount--no-pages > strong");
     private static final By ON_PAGE_AMOUNT = By.cssSelector("ol#products-list > li");
@@ -28,13 +27,15 @@ public class ElectronicsPage extends AbstractPage {
     private static final By NEXT_PAGE_BTN = By.linkText("NEXT");
     private static final By SORT_OPTION = By.cssSelector(".category-products > .toolbar > .sorter > .sort-by > select[title='Sort By']");
     private static final By PRICE_FILTER = By.cssSelector(".sidebar dd ol li .price");
-    //Check if filter was applied - need to check with contains or extract into list of doubles
-    // private static final By PRICE_FILTER_SELECTED = By.cssSelector(".sidebar .currently ol li .value");
     private static final By PRICE_OF_ELEMENTS = By.cssSelector(".col-main ol li .regular-price, ol li .price-to");
-    private static final By PRODUCT_TITLE_IN_LIST = By.cssSelector("ol#products-list > li .product-name");
+    private static final By PRODUCT_IN_LIST = By.cssSelector("ol#products-list > li");
+    private static final By ADD_TO_WISHLIST = By.cssSelector(".add-to-links .link-wishlist");
+    private static final By TITLE = By.cssSelector(".product-name");
+    private static final Button GRID_VIEW = new Button(By.cssSelector(".view-mode > a[title='Grid']"), "Sale page -> Grid View button");
+    private static final By SELECTED_VIEW = By.cssSelector(".category-products > .toolbar > .sorter > .view-mode > strong");
 
     public ElectronicsPage() {
-        Assert.assertEquals(getDriver().findElement(ELECTRONICS_TITLE).getText(), "ELECTRONICS");
+        Assert.assertEquals(getDriver().getTitle(), "Electronics - Home & Decor");
     }
 
     public ElectronicsPage selectShowAsList() {
@@ -121,26 +122,41 @@ public class ElectronicsPage extends AbstractPage {
         return this;
     }
 
-//    public ElectronicsPage chooseRandomItemInList() {
-//        List<WebElement> listOfElements = new WebDriverWait(getDriver(), 10)
-//                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(PRODUCT_TITLE_IN_LIST));
-//        WebElement randomItem = getRandomElement(listOfElements);
-//        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", randomItem);
-//        randomItem.click();
-//      return this;
-//    }
-        public String chooseRandomItemInList() {
+    public String addRandomItemInWishList() {
         List<WebElement> listOfElements = new WebDriverWait(getDriver(), 10)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(PRODUCT_TITLE_IN_LIST));
-        getContext().setRandomItem(getRandomElement(listOfElements));
-        return getRandomElement(listOfElements).getText();
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(PRODUCT_IN_LIST));
+        WebElement randomProductItem = getRandomElement(listOfElements);
+        String randomItemTitle = randomProductItem.findElement(TITLE).getText();
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", randomProductItem);
+        WebElement  addToWishList = randomProductItem.findElement(ADD_TO_WISHLIST);
+        addToWishList.click();
+        return randomItemTitle;
     }
 
-    public ProductPage openRandomItem(){
-        WebElement randomItem = getContext().getRandomItem();
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", randomItem);
-        randomItem.click();
-        return new ProductPage();
+    public ElectronicsPage selectGridView() {
+        WebElement viewMode = getDriver().findElement(SELECTED_VIEW);
+        String viewModeValue = viewMode.getAttribute("title");
+        if (!viewModeValue.contains("Grid")) {
+            GRID_VIEW.click();
+        }
+        return this;
     }
+
+    public ElectronicsPage setResultsGridToShowOnPage(SalePage.CountOfItemsInGrid count) {
+        Select resultsAmount = new Select(getDriver().findElement(SHOW_AMOUNT));
+        resultsAmount.selectByVisibleText(count.toString());
+     return this;
+    }
+
+//    public String addRandomItemInCard() {
+//        List<WebElement> listOfElements = new WebDriverWait(getDriver(), 10)
+//                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(PRODUCT_IN_LIST));
+//        WebElement randomProductItem = getRandomElement(listOfElements);
+//        String randomItemTitle = randomProductItem.findElement(TITLE).getText();
+//        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", randomProductItem);
+//        WebElement  addToWishList = randomProductItem.findElement(ADD_TO_WISHLIST);
+//        addToWishList.click();
+//        return randomItemTitle;
+//    }
 }
 

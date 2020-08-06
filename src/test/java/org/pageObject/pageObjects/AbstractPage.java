@@ -24,6 +24,7 @@ public class AbstractPage {
 
     private static final By LANGUAGE = By.id("select-language");
     private static final By HOME_AND_DECOR = By.linkText("HOME & DECOR");
+    private static final By SALE_PAGE = By.linkText("SALE");
     private static final By ACCOUNT_MENU = By.cssSelector(".skip-account .label");
     private static final By ACCOUNT_MENU_ITEM_REGISTER = By.cssSelector("#header-account  ul > li select[title='Register']");
     private static final By ACCOUNT_MENU_ITEMS = By.cssSelector("#header-account  ul > li");
@@ -33,8 +34,13 @@ public class AbstractPage {
         return new HomeDecorPage();
     }
 
+    public SalePage openSale() {
+        getDriver().findElement(SALE_PAGE).click();
+        return new SalePage();
+    }
+
     //@AllArgsConstructor
-    enum Language {
+    public enum Language {
         AUTO("Automation"),
         ENG("English");
 
@@ -50,7 +56,7 @@ public class AbstractPage {
         }
     }
 
-    public AbstractPage setLanguage(String lang) {
+    public AbstractPage setLanguage(Language lang) {
         Select language = new Select(getDriver().findElement(LANGUAGE));
         language.selectByVisibleText(lang.toString());
         return this;

@@ -1,8 +1,10 @@
 package org.pageObject.Tests;
 
 import org.pageObject.StepsDefinition.User;
+import org.pageObject.pageObjects.AbstractPage;
 import org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage;
 import org.pageObject.pageObjects.MainPage;
+import org.pageObject.pageObjects.MyWishList;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -10,6 +12,8 @@ import javax.jws.soap.SOAPBinding;
 
 import static org.pageObject.StepsDefinition.Context.getContext;
 import static org.pageObject.Utils.StringUtils.generateRandomString;
+import static org.pageObject.pageObjects.AbstractPage.Language.AUTO;
+import static org.pageObject.pageObjects.SalePage.CountOfItemsInGrid.THIRTY_SIX;
 
 public class Tests extends BaseTest {
 
@@ -28,10 +32,10 @@ public class Tests extends BaseTest {
                 .confirmPassword("password1!".concat(random))
                 .build());
     }
-/*
+
     @Test
     public void checkItemsCounter() {
-        mainPage.setLanguage("Automation")
+        mainPage.setLanguage(AUTO)
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -41,7 +45,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkShowSelect() {
-        mainPage.setLanguage("Automation")
+        mainPage.setLanguage(AUTO)
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -51,7 +55,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkSortBy() {
-        mainPage.setLanguage("Automation")
+        mainPage.setLanguage(AUTO)
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -62,7 +66,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkPriceFilter() {
-        mainPage.setLanguage("Automation")
+        mainPage.setLanguage(AUTO)
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -70,28 +74,45 @@ public class Tests extends BaseTest {
                 .setFilterByPriceRangeFrom(0.00, 999.99)
                 .checkPriceAccordingToFilter(0.00, 999.99);
     }
-*/
+
     @Test
     public void checkAddToWishList() {
-
-
-        String name=
-       mainPage.setLanguage("Automation")
+      String randomProductTitle = mainPage.setLanguage(AUTO)
                 .openRegistrationForm()
                 .registerUser(tlUser.get())
-                .logOut()
-                .openLoginForm()
-                .loginUser(tlUser.get())
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
                 .setResultsToShowOnPage(25)
-                .chooseRandomItemInList();
-                new ElectronicsPage()
-                .openRandomItem()
-                .addItemToWishList()
-                .verifyCorrectItemInWishList();
+                .addRandomItemInWishList();
+                new MyWishList()
+                .verifyCorrectItemInWishList(randomProductTitle);
     }
+
+    @Test
+    public void checkSale() {
+        mainPage.setLanguage(AUTO)
+                .openSale()
+                .selectGridView()
+                .setResultsGridToShowOnPage(THIRTY_SIX)
+                .verifyOldPriceIsHigher();
+    }
+
+    @Test
+    public void checkShoppingCard() {
+        mainPage.setLanguage(AUTO)
+                .openRegistrationForm()
+                .registerUser(tlUser.get())
+                .openHomeDecorMenu()
+                .openElectronicsCategory()
+                .selectGridView()
+                .setResultsGridToShowOnPage(THIRTY_SIX);
+//                .addRandomItemInCard();
+//                new MyCardPage()
+//                        .verifyProductAddedInCard(randomProductTitle)
+//                        .verifyGrandTotal();
+    }
+
 
 }
 

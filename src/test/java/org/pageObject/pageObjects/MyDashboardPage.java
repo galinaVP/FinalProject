@@ -9,6 +9,6 @@ public class MyDashboardPage extends AbstractPage{
     private static final By MY_DASHBOARD_PAGE_TITLE = By.cssSelector(".page-title h1");
 
     public MyDashboardPage(){
-        Assert.assertEquals(getDriver().findElement(MY_DASHBOARD_PAGE_TITLE).getText(), "MY DASHBOARD");
+        Assert.assertEquals(getDriver().getTitle(), "My Account");
     }
 }
