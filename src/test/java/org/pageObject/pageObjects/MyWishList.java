@@ -2,13 +2,9 @@ package org.pageObject.pageObjects;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
-import primitives.Button;
 import primitives.TextField;
 
-import java.lang.reflect.WildcardType;
-
 import static WDM.Driver.getDriver;
-import static org.pageObject.StepsDefinition.Context.getContext;
 
 public class MyWishList extends AbstractPage{
     private static final By PRODUCT_IN_THE_LIST_TITLE = By.cssSelector("tbody .product-name");

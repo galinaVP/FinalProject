@@ -1,16 +1,13 @@
 package org.pageObject.Tests;
 
+import org.pageObject.StepsDefinition.Product;
 import org.pageObject.StepsDefinition.User;
-import org.pageObject.pageObjects.AbstractPage;
-import org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage;
 import org.pageObject.pageObjects.MainPage;
+import org.pageObject.pageObjects.MyCartPage;
 import org.pageObject.pageObjects.MyWishList;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.jws.soap.SOAPBinding;
-
-import static org.pageObject.StepsDefinition.Context.getContext;
 import static org.pageObject.Utils.StringUtils.generateRandomString;
 import static org.pageObject.pageObjects.AbstractPage.Language.AUTO;
 import static org.pageObject.pageObjects.SalePage.CountOfItemsInGrid.THIRTY_SIX;
@@ -20,7 +17,7 @@ public class Tests extends BaseTest {
     MainPage mainPage;
     ThreadLocal<User> tlUser = new ThreadLocal<>();
 
-    @BeforeMethod (alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void mainPage() {
         mainPage = new MainPage();
         String random = generateRandomString(2);
@@ -77,7 +74,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkAddToWishList() {
-      String randomProductTitle = mainPage.setLanguage(AUTO)
+        String randomProductTitle = mainPage.setLanguage(AUTO)
                 .openRegistrationForm()
                 .registerUser(tlUser.get())
                 .openHomeDecorMenu()
@@ -85,7 +82,7 @@ public class Tests extends BaseTest {
                 .selectShowAsList()
                 .setResultsToShowOnPage(25)
                 .addRandomItemInWishList();
-                new MyWishList()
+        new MyWishList()
                 .verifyCorrectItemInWishList(randomProductTitle);
     }
 
@@ -100,19 +97,17 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkShoppingCard() {
-        mainPage.setLanguage(AUTO)
+        Product product = mainPage.setLanguage(AUTO)
                 .openRegistrationForm()
                 .registerUser(tlUser.get())
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectGridView()
-                .setResultsGridToShowOnPage(THIRTY_SIX);
-//                .addRandomItemInCard();
-//                new MyCardPage()
-//                        .verifyProductAddedInCard(randomProductTitle)
-//                        .verifyGrandTotal();
+                .setResultsGridToShowOnPage(THIRTY_SIX)
+                .openRandomItemToBuy()
+                .addProductToCart();
+        new MyCartPage()
+                .verifyProductTitleAndPrice(product);
     }
-
-
 }
 

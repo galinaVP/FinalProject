@@ -6,11 +6,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.pageObject.StepsDefinition.Product;
 import org.pageObject.pageObjects.AbstractPage;
+import org.pageObject.pageObjects.ProductPage;
 import org.pageObject.pageObjects.SalePage;
 import org.testng.Assert;
 import primitives.Button;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static WDM.Driver.getDriver;
@@ -33,6 +37,7 @@ public class ElectronicsPage extends AbstractPage {
     private static final By TITLE = By.cssSelector(".product-name");
     private static final Button GRID_VIEW = new Button(By.cssSelector(".view-mode > a[title='Grid']"), "Sale page -> Grid View button");
     private static final By SELECTED_VIEW = By.cssSelector(".category-products > .toolbar > .sorter > .view-mode > strong");
+    private static final By PRODUCT_IN_GRID_TO_ADD = By.xpath("//span[@class='regular-price']/../../h2[@class='product-name']");
 
     public ElectronicsPage() {
         Assert.assertEquals(getDriver().getTitle(), "Electronics - Home & Decor");
@@ -128,7 +133,7 @@ public class ElectronicsPage extends AbstractPage {
         WebElement randomProductItem = getRandomElement(listOfElements);
         String randomItemTitle = randomProductItem.findElement(TITLE).getText();
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", randomProductItem);
-        WebElement  addToWishList = randomProductItem.findElement(ADD_TO_WISHLIST);
+        WebElement addToWishList = randomProductItem.findElement(ADD_TO_WISHLIST);
         addToWishList.click();
         return randomItemTitle;
     }
@@ -145,18 +150,16 @@ public class ElectronicsPage extends AbstractPage {
     public ElectronicsPage setResultsGridToShowOnPage(SalePage.CountOfItemsInGrid count) {
         Select resultsAmount = new Select(getDriver().findElement(SHOW_AMOUNT));
         resultsAmount.selectByVisibleText(count.toString());
-     return this;
+        return this;
     }
 
-//    public String addRandomItemInCard() {
-//        List<WebElement> listOfElements = new WebDriverWait(getDriver(), 10)
-//                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(PRODUCT_IN_LIST));
-//        WebElement randomProductItem = getRandomElement(listOfElements);
-//        String randomItemTitle = randomProductItem.findElement(TITLE).getText();
-//        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", randomProductItem);
-//        WebElement  addToWishList = randomProductItem.findElement(ADD_TO_WISHLIST);
-//        addToWishList.click();
-//        return randomItemTitle;
-//    }
+    public ProductPage openRandomItemToBuy()  {
+        List<WebElement> listOfProdToAdd = new WebDriverWait(getDriver(), 10)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(PRODUCT_IN_GRID_TO_ADD));
+        WebElement randomProdToAdd = getRandomElement(listOfProdToAdd);
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", randomProdToAdd);
+        randomProdToAdd.click();
+        return new ProductPage();
+    }
 }
 
