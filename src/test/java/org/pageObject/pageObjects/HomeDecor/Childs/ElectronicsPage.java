@@ -12,6 +12,7 @@ import org.pageObject.pageObjects.ProductPage;
 import org.pageObject.pageObjects.SalePage;
 import org.testng.Assert;
 import primitives.Button;
+import primitives.TextField;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ import static org.pageObject.Utils.ListUtils.*;
 
 public class ElectronicsPage extends AbstractPage {
 
-    private static final By SHOW_AMOUNT = By.cssSelector(".category-products > .toolbar > .pager > .count-container > .limiter > select[title='Results per page']");
-    private static final By LIST = By.linkText("List");
+    private static final By SHOW_AMOUNT = By.cssSelector(".category-products select[title='Results per page']");
+    //private static final TextField SHOW_AMOUNT = new TextField(By.cssSelector(".category-products select[title='Results per page']"), "Electronics page -> Get Show Amount value");
+    private static final Button LIST = new Button(By.linkText("List"), "Electronics page -> List View button");
     private static final By COUNTER_AMOUNT = By.cssSelector(".category-products > .toolbar > .pager > .count-container > .amount.amount--no-pages > strong");
     private static final By ON_PAGE_AMOUNT = By.cssSelector("ol#products-list > li");
     private static final By PAGES_AMOUNT = By.cssSelector(".category-products > .toolbar > .pager > .pages > ol > li");
@@ -35,7 +37,7 @@ public class ElectronicsPage extends AbstractPage {
     private static final By PRODUCT_IN_LIST = By.cssSelector("ol#products-list > li");
     private static final By ADD_TO_WISHLIST = By.cssSelector(".add-to-links .link-wishlist");
     private static final By TITLE = By.cssSelector(".product-name");
-    private static final Button GRID_VIEW = new Button(By.cssSelector(".view-mode > a[title='Grid']"), "Sale page -> Grid View button");
+    private static final Button GRID_VIEW = new Button(By.cssSelector(".view-mode > a[title='Grid']"), "Electronics page -> Grid View button");
     private static final By SELECTED_VIEW = By.cssSelector(".category-products > .toolbar > .sorter > .view-mode > strong");
     private static final By PRODUCT_IN_GRID_TO_ADD = By.xpath("//span[@class='regular-price']/../../h2[@class='product-name']");
 
@@ -44,14 +46,31 @@ public class ElectronicsPage extends AbstractPage {
     }
 
     public ElectronicsPage selectShowAsList() {
-        getDriver().findElement(LIST).click();
+        LIST.click();
         return this;
     }
 
-    public ElectronicsPage setResultsToShowOnPage(int i) {
-        String amountOnPage = convertIntToString(i);
+    public enum CountOfItemsInList {
+        FIVE("5"),
+        TEN("10"),
+        FIFTEEN("15"),
+        TWENTY("20"),
+        TWENTY_FIVE("25");
 
-        getDriver().findElement(SHOW_AMOUNT).sendKeys(amountOnPage);
+        private final String count;
+        CountOfItemsInList(String count) {
+            this.count = count;
+        }
+
+        @Override
+        public String toString() {
+            return count;
+        }
+    }
+
+    public ElectronicsPage setResultsToShowOnPage(CountOfItemsInList count) {
+        Select resultsAmount = new Select(getDriver().findElement(SHOW_AMOUNT));
+        resultsAmount.selectByVisibleText(count.toString());
         return this;
     }
 
@@ -85,10 +104,25 @@ public class ElectronicsPage extends AbstractPage {
         }
         return this;
     }
+    public enum SortBy {
+        PRICE("Price"),
+        POSITION("Position"),
+        NAME("Name");
 
-    public ElectronicsPage setSortBy(String option) {
+        private final String sort;
+        SortBy(String sort) {
+            this.sort = sort;
+        }
+
+        @Override
+        public String toString() {
+            return sort;
+        }
+    }
+
+    public ElectronicsPage setSortBy(SortBy sort) {
         Select sortBy = new Select((getDriver().findElement(SORT_OPTION)));
-        sortBy.selectByVisibleText(option);
+        sortBy.selectByVisibleText(sort.toString());
         return this;
     }
 

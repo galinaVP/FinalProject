@@ -2,6 +2,7 @@ package org.pageObject.Tests;
 
 import org.pageObject.StepsDefinition.Product;
 import org.pageObject.StepsDefinition.User;
+import org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage;
 import org.pageObject.pageObjects.MainPage;
 import org.pageObject.pageObjects.MyCartPage;
 import org.pageObject.pageObjects.MyWishList;
@@ -10,7 +11,11 @@ import org.testng.annotations.Test;
 
 import static org.pageObject.Utils.StringUtils.generateRandomString;
 import static org.pageObject.pageObjects.AbstractPage.Language.AUTO;
+import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.CountOfItemsInList.FIVE;
+import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.CountOfItemsInList.TWENTY_FIVE;
+import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.SortBy.PRICE;
 import static org.pageObject.pageObjects.SalePage.CountOfItemsInGrid.THIRTY_SIX;
+import static org.pageObject.pageObjects.SalePage.CountOfItemsInGrid.*;
 
 public class Tests extends BaseTest {
 
@@ -36,7 +41,7 @@ public class Tests extends BaseTest {
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
-                .setResultsToShowOnPage(25)
+                .setResultsToShowOnPage(TWENTY_FIVE)
                 .checkItemsCountOnPage();
     }
 
@@ -46,7 +51,7 @@ public class Tests extends BaseTest {
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
-                .setResultsToShowOnPage(5)
+                .setResultsToShowOnPage(FIVE)
                 .checkItemsCountOnEachPage(5);
     }
 
@@ -56,8 +61,8 @@ public class Tests extends BaseTest {
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
-                .setResultsToShowOnPage(25)
-                .setSortBy("Price")
+                .setResultsToShowOnPage(TWENTY_FIVE)
+                .setSortBy(PRICE)
                 .checkSortedByPrice();
     }
 
@@ -67,7 +72,7 @@ public class Tests extends BaseTest {
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
-                .setResultsToShowOnPage(25)
+                .setResultsToShowOnPage(TWENTY_FIVE)
                 .setFilterByPriceRangeFrom(0.00, 999.99)
                 .checkPriceAccordingToFilter(0.00, 999.99);
     }
@@ -80,7 +85,7 @@ public class Tests extends BaseTest {
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
-                .setResultsToShowOnPage(25)
+                .setResultsToShowOnPage(TWENTY_FIVE)
                 .addRandomItemInWishList();
         new MyWishList()
                 .verifyCorrectItemInWishList(randomProductTitle);

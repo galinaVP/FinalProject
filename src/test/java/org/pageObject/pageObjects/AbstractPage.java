@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pageObject.pageObjects.HomeDecor.HomeDecorPage;
+import primitives.Button;
+import primitives.Option;
 
 import java.util.List;
 
@@ -23,14 +25,13 @@ public class AbstractPage {
     }
 
     private static final By LANGUAGE = By.id("select-language");
-    private static final By HOME_AND_DECOR = By.linkText("HOME & DECOR");
+    private static final Option HOME_AND_DECOR = new Option(By.linkText("HOME & DECOR"), "HomeDecor page -> HomeDecor Option");
     private static final By SALE_PAGE = By.linkText("SALE");
     private static final By ACCOUNT_MENU = By.cssSelector(".skip-account .label");
-    private static final By ACCOUNT_MENU_ITEM_REGISTER = By.cssSelector("#header-account  ul > li select[title='Register']");
     private static final By ACCOUNT_MENU_ITEMS = By.cssSelector("#header-account  ul > li");
 
     public HomeDecorPage openHomeDecorMenu() {
-        getDriver().findElement(HOME_AND_DECOR).click();
+        HOME_AND_DECOR.click();
         return new HomeDecorPage();
     }
 

@@ -10,7 +10,7 @@ public class TextField extends BaseElement {
     }
 
     public String getText(){
-        String text =get().getText();
+        String text = get().getText();
         Allure.addAttachment(String.format("get text '%s'", text), description);
         return text;
     }
