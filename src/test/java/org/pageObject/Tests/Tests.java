@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import static org.pageObject.Utils.StringUtils.generateRandomString;
 import static org.pageObject.pageObjects.AbstractPage.Language.AUTO;
+import static org.pageObject.pageObjects.AbstractPage.Language.ENG;
 import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.CountOfItemsInList.FIVE;
 import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.CountOfItemsInList.TWENTY_FIVE;
 import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.SortBy.PRICE;
@@ -25,19 +26,19 @@ public class Tests extends BaseTest {
     @BeforeMethod(alwaysRun = true)
     public void mainPage() {
         mainPage = new MainPage();
-        String random = generateRandomString(2);
+        String random = generateRandomString(3);
         tlUser.set(User.builder()
-                .firstName("TestFirst".concat(random))
-                .lastName("TestLast1".concat(random))
-                .email(random.concat("Email@test.com"))
-                .password("password1!".concat(random))
-                .confirmPassword("password1!".concat(random))
+                .firstName("Halyna".concat(random))
+                .lastName("Prit".concat(random))
+                .email(random.concat("mail@to.com"))
+                .password("password".concat(random))
+                .confirmPassword("password".concat(random))
                 .build());
     }
 
     @Test
     public void checkItemsCounter() {
-        mainPage.setLanguage(AUTO)
+        mainPage.setLanguage(ENG)
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -47,7 +48,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkShowSelect() {
-        mainPage.setLanguage(AUTO)
+        mainPage.setLanguage(ENG)
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -57,7 +58,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkSortBy() {
-        mainPage.setLanguage(AUTO)
+        mainPage.setLanguage(ENG)
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -68,7 +69,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkPriceFilter() {
-        mainPage.setLanguage(AUTO)
+        mainPage.setLanguage(ENG)
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -79,7 +80,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkAddToWishList() {
-        String randomProductTitle = mainPage.setLanguage(AUTO)
+        String randomProductTitle = mainPage.setLanguage(ENG)
                 .openRegistrationForm()
                 .registerUser(tlUser.get())
                 .openHomeDecorMenu()
@@ -93,7 +94,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkSale() {
-        mainPage.setLanguage(AUTO)
+        mainPage.setLanguage(ENG)
                 .openSale()
                 .selectGridView()
                 .setResultsGridToShowOnPage(THIRTY_SIX)

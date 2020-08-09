@@ -78,7 +78,8 @@ public class SalePage {
         }
 
         for (Product item : items) {
-            Assert.assertTrue(item.getPrice() > item.getSalePrice(), String.format("Old price is higher or equal than a sale for {0}", item.getTitle()));
+            Assert.assertTrue(item.getPrice() > item.getSalePrice(),
+                    String.format("Old price '%f' is higher or equal than a sale price '%f' for '%s'", item.getPrice(),item.getSalePrice(), item.getTitle()));
         }
         return this;
     }

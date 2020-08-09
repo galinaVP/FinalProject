@@ -24,7 +24,6 @@ public class BaseElement {
         return elem;
     }
 
-
     private void highlight(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("arguments[0].setAttribute('style', 'border: 3px solid red;');", element);

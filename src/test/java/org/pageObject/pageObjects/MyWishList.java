@@ -7,8 +7,7 @@ import primitives.TextField;
 import static WDM.Driver.getDriver;
 
 public class MyWishList extends AbstractPage{
-    private static final By PRODUCT_IN_THE_LIST_TITLE = By.cssSelector("tbody .product-name");
-    private static final TextField REGISTER  = new TextField(By.cssSelector("tbody .product-name"), "MyWishList page -> Product title text");
+    private static final By TITLE = By.cssSelector("tbody .product-name");
 
     public MyWishList(){
             Assert.assertEquals(getDriver().getTitle(), "My Wishlist");
@@ -16,8 +15,9 @@ public class MyWishList extends AbstractPage{
 
 
     public MyWishList verifyCorrectItemInWishList(String titleExpected) {
-        String titleAdded = getDriver().findElement(PRODUCT_IN_THE_LIST_TITLE).getText();
-        Assert.assertEquals(titleAdded,titleExpected,"Titles of randomly selected and added items aren't the same");
+        String titleAdded = getDriver().findElement(TITLE).getText();
+        Assert.assertEquals(titleAdded,titleExpected,
+                String.format("Titles of product in wishlist '%s' and added '%s' aren't the same",titleAdded,titleExpected));
         return this;
     }
 }

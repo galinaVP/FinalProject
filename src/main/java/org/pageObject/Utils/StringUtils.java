@@ -32,7 +32,7 @@ public class StringUtils {
         return stringValue;
     }
 
-    private static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String ALPHABET = "QWERTYUIOPASDFGHJKL0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuiopasdfghjklzxcvbnm0987654321";
     private static final SecureRandom RANDOM = new SecureRandom();
     public static String generateRandomString(int count) {
         StringBuilder sb = new StringBuilder();

@@ -13,7 +13,6 @@ import static WDM.Driver.getDriver;
 public class HomeDecorPage extends AbstractPage {
 
     private static final By BUTTON_SUBSCRIBE = By.cssSelector(".block.block-subscribe > .block-title > strong > span");
-    private static final By HOME_AND_DECOR_TITLE = By.cssSelector(".category-title h1");
     private static final By ELECTRONICS_CATEGORY = By.cssSelector("img[alt='Electronics']");
 
     public HomeDecorPage() {
