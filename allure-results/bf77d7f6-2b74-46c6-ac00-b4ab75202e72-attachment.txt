@@ -1,1 +1,0 @@
-MyCartPage -> Grand Total value

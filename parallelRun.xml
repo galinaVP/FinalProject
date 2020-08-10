@@ -1,7 +1,0 @@
-<suite name="TestSuite" thread-count="3" parallel="methods">
-    <test name="myTests">
-        <classes>
-            <class name="org.pageObject.Tests.Tests"/>
-        </classes>
-    </test>
-</suite>

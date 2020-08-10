@@ -61,6 +61,13 @@ public class AbstractPage {
         return this;
     }
 
+    public AbstractPage setLanguage() {
+        Language lang = Language.valueOf(System.getProperty("language", "AUTO"));
+        Select language = new Select(getDriver().findElement(LANGUAGE));
+        language.selectByVisibleText(lang.toString());
+        return this;
+    }
+
     public RegistrationPage openRegistrationForm(){
         getDriver().findElement(ACCOUNT_MENU).click();
         List <WebElement> accountMenuItems = getDriver().findElements(ACCOUNT_MENU_ITEMS);

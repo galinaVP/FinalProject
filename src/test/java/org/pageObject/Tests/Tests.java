@@ -2,6 +2,7 @@ package org.pageObject.Tests;
 
 import org.pageObject.StepsDefinition.Product;
 import org.pageObject.StepsDefinition.User;
+import org.pageObject.pageObjects.AbstractPage;
 import org.pageObject.pageObjects.MainPage;
 import org.pageObject.pageObjects.MyCartPage;
 import org.pageObject.pageObjects.MyWishList;
@@ -9,8 +10,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.pageObject.Utils.StringUtils.generateRandomString;
-import static org.pageObject.pageObjects.AbstractPage.Language.AUTO;
-import static org.pageObject.pageObjects.AbstractPage.Language.ENG;
 import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.CountOfItemsInList.FIVE;
 import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.CountOfItemsInList.TWENTY_FIVE;
 import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.SortBy.PRICE;
@@ -36,7 +35,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkItemsCounter() {
-        mainPage.setLanguage(ENG)
+        mainPage.setLanguage()
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -46,7 +45,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkShowSelect() {
-        mainPage.setLanguage(ENG)
+        mainPage.setLanguage()
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -56,7 +55,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkSortBy() {
-        mainPage.setLanguage(ENG)
+        mainPage.setLanguage()
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -67,7 +66,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkPriceFilter() {
-        mainPage.setLanguage(ENG)
+        mainPage.setLanguage()
                 .openHomeDecorMenu()
                 .openElectronicsCategory()
                 .selectShowAsList()
@@ -78,7 +77,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkAddToWishList() {
-        String randomProductTitle = mainPage.setLanguage(ENG)
+        String randomProductTitle = mainPage.setLanguage()
                 .openRegistrationForm()
                 .registerUser(tlUser.get())
                 .openHomeDecorMenu()
@@ -92,7 +91,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkSale() {
-        mainPage.setLanguage(ENG)
+        mainPage.setLanguage()
                 .openSale()
                 .selectGridView()
                 .setResultsGridToShowOnPage(THIRTY_SIX)
@@ -101,7 +100,7 @@ public class Tests extends BaseTest {
 
     @Test
     public void checkShoppingCard() {
-        Product product = mainPage.setLanguage(AUTO)
+        Product product = mainPage.setLanguage()
                 .openRegistrationForm()
                 .registerUser(tlUser.get())
                 .openHomeDecorMenu()
