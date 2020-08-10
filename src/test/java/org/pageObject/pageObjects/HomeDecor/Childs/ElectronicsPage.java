@@ -76,13 +76,15 @@ public class ElectronicsPage extends AbstractPage {
     }
 
     public ElectronicsPage checkItemsCountOnPage() {
-        List<WebElement> listOfElements = new WebDriverWait(getDriver(), 20)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(ON_PAGE_AMOUNT));
-        int counterAmount = extractIntFromString(COUNTER.getText());
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(ON_PAGE_AMOUNT));
+
+        List<WebElement> listOfElements = getDriver().findElements(ON_PAGE_AMOUNT);
         int amountOnPage = listOfElements.size();
+        int counterAmount = extractIntFromString(COUNTER.getText());
 
         Assert.assertEquals(amountOnPage, counterAmount,
-                String.format("Amount of Products on page '%d' not equals to the counter value '%d'", amountOnPage,counterAmount));
+                String.format("Amount of Products on page '%d' not equals to the counter value '%d'", amountOnPage, counterAmount));
         return this;
     }
 
@@ -139,7 +141,7 @@ public class ElectronicsPage extends AbstractPage {
             double init = extractDoubleFromString(priceOfElements.get(i).getText());
             double next = extractDoubleFromString(priceOfElements.get(i + 1).getText());
             Assert.assertTrue(init <= next,
-                    String.format("Product #'%d' price is '%f' and it's bigger then next product price '%f' ",i+1 ,init,next));
+                    String.format("Product #'%d' price is '%f' and it's bigger then next product price '%f' ", i + 1, init, next));
         }
         return this;
     }
@@ -163,7 +165,7 @@ public class ElectronicsPage extends AbstractPage {
         for (int i = 0; i < amountOfPrice; i++) {
             double price = extractDoubleFromString(priceOfElements.get(i).getText());
             Assert.assertTrue(price >= fromPrice && price <= toPrice,
-                    String.format("Price of the product #'%d' is not in the selected filter range and equals '%s'", i+1, price));
+                    String.format("Price of the product #'%d' is not in the selected filter range and equals '%s'", i + 1, price));
         }
         return this;
     }
