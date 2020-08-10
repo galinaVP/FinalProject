@@ -6,17 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.pageObject.StepsDefinition.Product;
 import org.pageObject.pageObjects.AbstractPage;
 import org.pageObject.pageObjects.ProductPage;
 import org.pageObject.pageObjects.SalePage;
 import org.testng.Assert;
 import primitives.Button;
-import primitives.Option;
 import primitives.TextField;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import static WDM.Driver.getDriver;
@@ -87,7 +83,6 @@ public class ElectronicsPage extends AbstractPage {
                 String.format("Amount of Products on page '%d' not equals to the counter value '%d'", amountOnPage, counterAmount));
         return this;
     }
-
 
     public ElectronicsPage checkItemsCountOnEachPage(int expected) {
         int amountOfPages = getDriver().findElements(PAGES_AMOUNT).size();

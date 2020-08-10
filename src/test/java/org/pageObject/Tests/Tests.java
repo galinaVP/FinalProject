@@ -2,7 +2,6 @@ package org.pageObject.Tests;
 
 import org.pageObject.StepsDefinition.Product;
 import org.pageObject.StepsDefinition.User;
-import org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage;
 import org.pageObject.pageObjects.MainPage;
 import org.pageObject.pageObjects.MyCartPage;
 import org.pageObject.pageObjects.MyWishList;
@@ -16,7 +15,6 @@ import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.CountO
 import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.CountOfItemsInList.TWENTY_FIVE;
 import static org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage.SortBy.PRICE;
 import static org.pageObject.pageObjects.SalePage.CountOfItemsInGrid.THIRTY_SIX;
-import static org.pageObject.pageObjects.SalePage.CountOfItemsInGrid.*;
 
 public class Tests extends BaseTest {
 
@@ -116,4 +114,3 @@ public class Tests extends BaseTest {
                 .verifyProductTitleAndPrice(product);
     }
 }
-

@@ -4,7 +4,6 @@ import org.jsoup.helper.Validate;
 import org.openqa.selenium.By;
 import org.pageObject.StepsDefinition.Product;
 import org.testng.Assert;
-import primitives.TextField;
 
 import static WDM.Driver.getDriver;
 import static org.pageObject.Utils.StringUtils.extractDoubleFromString;

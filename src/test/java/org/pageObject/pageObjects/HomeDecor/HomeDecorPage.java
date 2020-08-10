@@ -3,7 +3,6 @@ package org.pageObject.pageObjects.HomeDecor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.pageObject.pageObjects.AbstractPage;
 import org.pageObject.pageObjects.HomeDecor.Childs.ElectronicsPage;
 import org.testng.Assert;

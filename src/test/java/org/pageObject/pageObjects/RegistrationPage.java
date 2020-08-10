@@ -1,6 +1,5 @@
 package org.pageObject.pageObjects;
 
-import com.fasterxml.jackson.databind.ser.std.NullSerializer;
 import org.openqa.selenium.By;
 import org.pageObject.StepsDefinition.User;
 import org.testng.Assert;
@@ -8,7 +7,6 @@ import primitives.Button;
 import primitives.InputField;
 
 import static WDM.Driver.getDriver;
-import static org.pageObject.Utils.StringUtils.generateRandomString;
 
 public class RegistrationPage extends AbstractPage {
 

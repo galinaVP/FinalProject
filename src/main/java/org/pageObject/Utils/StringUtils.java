@@ -1,8 +1,6 @@
 package org.pageObject.Utils;
 
 import java.security.SecureRandom;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,11 +25,6 @@ public class StringUtils {
         return extractedDouble;
     }
 
-    public static String convertIntToString(int integerValue){
-        String stringValue = String.valueOf(integerValue);
-        return stringValue;
-    }
-
     private static final String ALPHABET = "QWERTYUIOPASDFGHJKL0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuiopasdfghjklzxcvbnm0987654321";
     private static final SecureRandom RANDOM = new SecureRandom();
     public static String generateRandomString(int count) {
@@ -42,4 +35,3 @@ public class StringUtils {
         return sb.toString();
     }
 }
-

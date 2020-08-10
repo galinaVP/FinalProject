@@ -74,32 +74,4 @@ public class AbstractPage {
         }
         return new RegistrationPage();
     }
-
-    public AbstractPage logOut() {
-        getDriver().findElement(ACCOUNT_MENU).click();
-        List <WebElement> accountMenuItems = getDriver().findElements(ACCOUNT_MENU_ITEMS);
-        int menuItemsCount = accountMenuItems.size();
-        for (int i = 0; i < menuItemsCount; i++){
-            String register = accountMenuItems.get(i).getText();
-            if (register.contains("Log Out")){
-                accountMenuItems.get(i).click();
-                break;
-            }
-        }
-        return this;
-    }
-    public LoginPage openLoginForm() {
-        getDriver().findElement(ACCOUNT_MENU).click();
-        List <WebElement> accountMenuItems = getDriver().findElements(ACCOUNT_MENU_ITEMS);
-        int menuItemsCount = accountMenuItems.size();
-        for (int i = 0; i < menuItemsCount; i++){
-            String register = accountMenuItems.get(i).getText();
-            if (register.contains("Log In")){
-                accountMenuItems.get(i).click();
-                break;
-            }
-        }
-        return new LoginPage();
-    }
-
 }
